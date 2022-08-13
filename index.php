@@ -22,6 +22,11 @@ function main(): void
     }
 
     foreach ($customers as $i => $customer) {
+        if ($customer['active'] === false) {
+            unset($customers[$i]);
+            continue;
+        }
+
         $customerId = $customer['id'];
 
         $customerTotalProfit = 0;
