@@ -49,6 +49,7 @@ function main(): void
         $customers[$i]['total_profit'] = $customerTotalProfit;
     }
 
+    usort($customers, 'compareCustomerTotalProfit');
 
     // Sort the ACTIVE customers from the one who bought the most from us (paid orders) to the one who bought the least
     // Customer ID, Customer email, total profit value
@@ -89,4 +90,14 @@ function getAllOrders(): array
     }
 
     return json_decode($rawData, true);
+}
+
+
+function compareCustomerTotalProfit($customer1, $customer2): int
+{
+    if ($customer1['total_profit'] == $customer2['total_profit']) {
+        return 0;
+    }
+
+    return ($customer1['total_profit'] > $customer2['total_profit']) ? -1 : 1; //DESC
 }
