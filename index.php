@@ -32,18 +32,18 @@ function main(): void
         }
 
         foreach ($customerAllOrders as $customerOrder) {
-            $customerTotalProfit += $customerOrder['items'][0]['price'];
+            if ($customerOrder['paid_at'] === null) {
+                continue;
+            }
+
+            foreach ($customerOrder['items'] as $item) {
+                $customerTotalProfit += $item['price'];
+            }
         }
 
         $customers[$i]['total_profit'] = $customerTotalProfit;
     }
 
-    // Missing array sorting method (with callback?)
-    //
-    //
-    //
-    //
-    //
 
     // Sort the ACTIVE customers from the one who bought the most from us (paid orders) to the one who bought the least
     // Customer ID, Customer email, total profit value
@@ -53,7 +53,7 @@ function main(): void
             $customer['email'],
             $customer['total_profit'],
         ];
-        echo implode(';', $row) . PHP_EOL;
+        echo implode(';', $row) . PHP_EOL . '<br>';
     }
 }
 
